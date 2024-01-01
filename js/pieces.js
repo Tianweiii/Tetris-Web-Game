@@ -207,4 +207,12 @@ const T = [
   ]
 ]
 
-const types = [[O, "yellow"], [I, "blue"], [S, "red"], [Z, "green"], [J, "pink"], [L, "orange"], [T, "purple"]]
+const types = [
+  [O, "yellow"], 
+  [I, "blue"], 
+  [S, "red"], 
+  [Z, "green"], 
+  [J, "pink"], 
+  [L, "orange"], 
+  [T, "purple"]
+]

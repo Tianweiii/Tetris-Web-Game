@@ -3,7 +3,7 @@ const context = canvas.getContext('2d');
 
 const columns = 10;
 const rows = 20;
-const blockSize = 40;
+const blockSize = 30;
 
 const width = canvas.width = columns * blockSize;
 const height = canvas.height = rows * blockSize;
@@ -33,8 +33,3 @@ class Board {
 
 const board = new Board(context);
 console.table(board.board);
-
-// function drawSquare(x, y, color) {
-//   context.fillStyle = color;
-//   context.fillRect(blockSize * x, blockSize * y, blockSize -1, blockSize -1)
-// }
