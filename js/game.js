@@ -10,16 +10,11 @@ class Piece {
     this.y = -3;
   };
 
-  drawSquare(x, y, color) {
-    context.fillStyle = color;
-    context.fillRect(blockSize * x + 1, blockSize * y + 1, blockSize - 2, blockSize - 2)
-  }
-
   draw() {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
         if (this.activeType[row][column] === 1) {
-          this.drawSquare(this.x + column, this.y + row, this.color)
+          drawSquare(this.x + column, this.y + row, this.color)
         }
       }
     }
@@ -29,7 +24,7 @@ class Piece {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
         if (this.activeType[row][column] === 1) {
-          this.drawSquare(this.x + column, this.y + row, "white")
+          drawSquare(this.x + column, this.y + row, "white")
         }
       }
     }
@@ -53,7 +48,7 @@ class Piece {
         if (newY < 0) {
           continue
         }
-        if (board.board[newY][newX] !== 0) {
+        if (board.board[newY][newX] !== 'white') {
           return true
         }
       }
@@ -119,10 +114,28 @@ class Piece {
           window.alert("Game Over");
           break;
         }
-        board.board[this.y + row][this.x + column] = 1;
+        board.board[this.y + row][this.x + column] = this.color;
       }
     }
     console.table(board.board)
+    for (let row = 0; row < board.board.length; row++) {
+      let fullRow = true;
+      for (let column = 0; column < board.board[row].length; column++) {
+        if (board.board[row][column] === 'white') {
+          fullRow = false;
+          break;
+        }
+      }
+      if (fullRow) {
+        let newArr = [];
+        for (let column = 0; column < board.board[row].length; column++) {
+          newArr.push("white");
+        }
+        board.board.splice(row, 1);
+        board.board.splice(0, 0, newArr)
+      }
+    }
+    drawBoard()
   }
 
   getCurrentPiecePosition() {
@@ -165,35 +178,6 @@ function chooseNum() {
   return new Piece(types[number][0], types[number][1])
 }
 
-function drawBoard() {
-  for (let r = 0; r < board.board.length; r++) {
-    for (let c = 0; c <board.board[r].length; c++) {
-      drawSquare()
-    }
-  }
-}
-
-function checkBoard() {
-  for (let row = 0; row < board.board.length; row++) {
-    let fullRow = true;
-    for (let column = 0; column < board.board[row].length; column++) {
-      if (board.board[row][column] === 0) {
-        fullRow = false;
-        break;
-      }
-    }
-    if (fullRow) {
-      // clear row and drop whole table
-      for (let upper = row; upper < 0; upper--) {
-        for (let column = 0; column < board.board[upper].length; column++) {
-          board.board[upper][column] = board[upper - 1][column]
-        }
-      }
-    }
-  }
-}
-
-
 let p = chooseNum()
 p.draw()
 let gameOver = false;
@@ -206,30 +190,3 @@ playGame.addEventListener("click", () => {
     }
   }, 500);
 })
-
-
-const test = [
-  [0,1,0],
-  [0,0,0],
-  [1,1,1],
-  [0,1,1]
-]
-
-for (let i = 0; i < test.length; i++) {
-  let full = true;
-  for (let j = 0; j < test[i].length; j++) {
-    if (test[i][j] === 0) {
-      full = false;
-      break;
-    }
-  }
-  if (full) {
-    test.splice(i, 1);
-    let newArr = []
-    for (j = 0;  j < test[i].length; j++) {
-      newArr.push(0)
-    }
-    test.splice(0, 0, newArr)
-    console.log(test);
-  }
-}
