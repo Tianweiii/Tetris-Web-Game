@@ -7,7 +7,7 @@ class Piece {
     this.activeType = this.type[this.order];
 
     this.x = 4;
-    this.y = 0;
+    this.y = -3;
   };
 
   drawSquare(x, y, color) {
@@ -44,7 +44,7 @@ class Piece {
         // define moved location
         let newX = this.x + column + x;
         let newY = this.y + row + y;
-        console.log(newX, newY);
+        // console.log(newX, newY);
         // check for left, right and bottom collisions
         if (newX < 0 || newX >= columns || newY >= rows) {
           return true;
@@ -97,11 +97,31 @@ class Piece {
   }
 
   moveDown() {
-    this.undraw();
     if (!this.collisionDetect(0, 1)) {
-      this.y++
+      this.undraw()
+      this.y++;
+      this.draw()
+    } else {
+      this.lock()
+      p = chooseNum();
+      p.draw()
     }
-    this.draw();
+  }
+
+  lock() {
+    for (let row = 0; row < this.activeType.length; row++) {
+      for (let column = 0; column < this.activeType[row].length; column++) {
+        if (this.activeType[row][column] === 0) {
+          continue
+        };
+        if (this.y + row < 0) {
+          gameOver = true;
+          window.alert("Game Over");
+          break;
+        }
+        board.board[this.y + row][this.x + column] = 1;
+      }
+    }
   }
 
   getCurrentPiecePosition() {
@@ -146,14 +166,16 @@ function chooseNum() {
   return new Piece(types[number][0], types[number][1])
 }
 
+
 let p = chooseNum()
 p.draw()
-
+let gameOver = false;
 const playGame = document.getElementById("play-game")
 playGame.addEventListener("click", () => {
-  setInterval(() => {
-    p.moveDown()
-  }, 1000);
+  let start = setInterval(() => {
+    p.moveDown();
+    if (gameOver) {
+      clearInterval(start)
+    }
+  }, 500);
 })
-
-// set fix spots when reach bottom
