@@ -38,62 +38,90 @@ class Piece {
   collisionDetect(x, y) {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
-        if (this.activeType[row][column] === 0) {continue}
+        if (this.activeType[row][column] === 0) {
+          continue
+        }
+        // define moved location
         let newX = this.x + column + x;
         let newY = this.y + row + y;
-        if (newX < 0 || newX > columns || newY > rows) {
+        console.log(newX, newY);
+        // check for left, right and bottom collisions
+        if (newX < 0 || newX >= columns || newY >= rows) {
           return true;
         }
-        if (newY < 0) {continue}
-        if (board[newY][newX] != 0) {
-          return true;
+        // check ceiling limit
+        if (newY < 0) {
+          continue
+        }
+        if (board.board[newY][newX] !== 0) {
+          return true
         }
       }
     }
-    return false
+    return false;
   }
 
   rotate() {
     this.undraw()
+    const oldType = this.activeType;
     this.order++;
     if (this.order > 3) {
       this.order = 0;
-    }
+    };
     this.activeType = this.type[this.order];
-    this.draw()
+    if (this.collisionDetect(0,0)) {
+      if (this.order === 0) {
+        this.order = 3;
+      } else {
+        this.order--;
+      }
+      this.activeType = oldType;
+    };
+    this.draw();
   };
 
   moveLeft() {
     this.undraw();
-    this.x--;
-    if (this.x < 0) {
-      this.x++
-    };
+    if (!this.collisionDetect(-1,0)) {
+      this.x--
+    }
     this.draw();
   }
 
   moveRight() {
     this.undraw();
-    this.x++;
-    // let placeholder = 0;
-    // for (let i = 0; i < this.activeType.length; i++) {
-    //   let lastElement = this.activeType[i][this.activeType.length - 1]
-    //   placeholder += lastElement;
-    // }
-    // if (placeholder === 0) {
-    //   this.moveLeft()
-    // }
-    // if (this.x + this.activeType[0].length > columns) {
-    //   this.x--;
-    // }
+    if (!this.collisionDetect(1,0)) {
+      this.x++
+    }
     this.draw();
   }
 
   moveDown() {
     this.undraw();
-    this.y++;
+    if (!this.collisionDetect(0, 1)) {
+      this.y++
+    }
     this.draw();
   }
+
+  getCurrentPiecePosition() {
+    const positions = [];
+  
+    for (let row = 0; row < this.activeType.length; row++) {
+      for (let column = 0; column < this.activeType[row].length; column++) {
+        if (this.activeType[row][column] === 1) {
+          console.log(this.x);
+          console.log(column);
+          const x = this.x + column;
+          const y = this.y + row;
+          positions.push({ x, y });
+        }
+      }
+    }
+
+    return positions;
+  }
+  
 }
 
 document.addEventListener("keydown", move)
@@ -101,12 +129,15 @@ document.addEventListener("keydown", move)
 function move(event) {
   if (event.key === "ArrowLeft") {
     p.moveLeft()
+    console.log(p.x);
   } else if (event.key === "ArrowRight") {
     p.moveRight()
+    console.log(p.x);
   } else if (event.key === "ArrowUp") {
     p.rotate()
   } else if (event.key === "ArrowDown") {
     p.moveDown()
+    console.log(p.y);
   }
 }
 
@@ -124,3 +155,5 @@ playGame.addEventListener("click", () => {
     p.moveDown()
   }, 1000);
 })
+
+// set fix spots when reach bottom
