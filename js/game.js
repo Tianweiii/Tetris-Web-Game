@@ -122,6 +122,7 @@ class Piece {
         board.board[this.y + row][this.x + column] = 1;
       }
     }
+    console.table(board.board)
   }
 
   getCurrentPiecePosition() {
@@ -138,10 +139,8 @@ class Piece {
         }
       }
     }
-
     return positions;
   }
-  
 }
 
 document.addEventListener("keydown", move)
@@ -166,6 +165,34 @@ function chooseNum() {
   return new Piece(types[number][0], types[number][1])
 }
 
+function drawBoard() {
+  for (let r = 0; r < board.board.length; r++) {
+    for (let c = 0; c <board.board[r].length; c++) {
+      drawSquare()
+    }
+  }
+}
+
+function checkBoard() {
+  for (let row = 0; row < board.board.length; row++) {
+    let fullRow = true;
+    for (let column = 0; column < board.board[row].length; column++) {
+      if (board.board[row][column] === 0) {
+        fullRow = false;
+        break;
+      }
+    }
+    if (fullRow) {
+      // clear row and drop whole table
+      for (let upper = row; upper < 0; upper--) {
+        for (let column = 0; column < board.board[upper].length; column++) {
+          board.board[upper][column] = board[upper - 1][column]
+        }
+      }
+    }
+  }
+}
+
 
 let p = chooseNum()
 p.draw()
@@ -179,3 +206,30 @@ playGame.addEventListener("click", () => {
     }
   }, 500);
 })
+
+
+const test = [
+  [0,1,0],
+  [0,0,0],
+  [1,1,1],
+  [0,1,1]
+]
+
+for (let i = 0; i < test.length; i++) {
+  let full = true;
+  for (let j = 0; j < test[i].length; j++) {
+    if (test[i][j] === 0) {
+      full = false;
+      break;
+    }
+  }
+  if (full) {
+    test.splice(i, 1);
+    let newArr = []
+    for (j = 0;  j < test[i].length; j++) {
+      newArr.push(0)
+    }
+    test.splice(0, 0, newArr)
+    console.log(test);
+  }
+}
