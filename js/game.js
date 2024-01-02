@@ -127,6 +127,7 @@ class Piece {
         }
       }
       if (fullRow) {
+        score += 100
         let newArr = [];
         for (let column = 0; column < board.board[row].length; column++) {
           newArr.push("white");
@@ -135,7 +136,8 @@ class Piece {
         board.board.splice(0, 0, newArr)
       }
     }
-    drawBoard()
+    drawBoard();
+    scoreboard.innerHTML = score
   }
 
   getCurrentPiecePosition() {
@@ -178,8 +180,9 @@ function chooseNum() {
   return new Piece(types[number][0], types[number][1])
 }
 
-let p = chooseNum()
-p.draw()
+let score = 0;
+let p = chooseNum();
+p.draw();
 let gameOver = false;
 const playGame = document.getElementById("play-game")
 playGame.addEventListener("click", () => {

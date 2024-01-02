@@ -1,24 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Manrope&family=Playpen+Sans&family=Roboto:ital,wght@0,400;0,500;1,500&family=Rubik:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Changa&family=Manrope&family=Playpen+Sans&family=Roboto:ital,wght@0,400;0,500;1,500&family=Rubik:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   display: flex;
   width: 80%;
-  margin: 0px auto;
+  margin: 50px auto;
+  color: white;
 }
 
 .right-section {
-  border: 1px solid grey;
+  border: 1px solid white;
+  background-color: rgba(0,0,0);
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px 30px;
 }
 
 .right-section h1 {
   font-family: bungee Spice;
   font-size: 50px;
+  margin: 10px auto 20px auto;
+}
+
+.right-section p {
+  font-family: changa;
+  font-size: 20px;
+}
+
+.controls {
+  display: flex;
+  column-gap: 20px;
+  margin-top: 20px;
+}
+
+.controls-right {
+  padding: 0 20px;
+}
+
+.controls-right div{
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+#play-game {
+  width: 60%;
+  margin: 50px auto;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: orange;
+  color: white;
+  font-size: 18px;
+  font-family: changa;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+#play-game:hover {
+  opacity: 0.5;
 }
