@@ -10,11 +10,11 @@ const width = canvas.width = columns * blockSize;
 const height = canvas.height = rows * blockSize;
 
 
-for (let x = 0; x < width; x += blockSize) {
-  for (let y = 0; y < height; y += blockSize) {
-    context.strokeRect(x, y, blockSize, blockSize)
-  }
-}
+// for (let x = 0; x < width; x += blockSize) {
+//   for (let y = 0; y < height; y += blockSize) {
+//     context.strokeRect(x, y, blockSize, blockSize)
+//   }
+// }
 
 class Board {
   constructor(ctx) {

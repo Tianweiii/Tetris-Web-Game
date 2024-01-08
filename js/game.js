@@ -110,7 +110,34 @@ class Piece {
     };
     this.lock();
     p = chooseNum();
-    p.draw()
+    p.draw();
+  }
+
+  holdPiece(currentPiece) {
+    console.log(pouch);
+    this.undraw();
+    if (pouch.length === 0) {
+      pouch.push({
+        type: currentPiece.type,
+        order: currentPiece.order,
+        color: currentPiece.color
+      });
+      p = chooseNum();
+      return p
+    } else {
+      console.log(pouch[0].type)
+      pouch.push({
+        type: currentPiece.type,
+        order: currentPiece.order,
+        color: currentPiece.color
+      });
+      const oldPiece = pouch.shift();
+      this.type = oldPiece.type;
+      this.order = oldPiece.order;
+      this.activeType = oldPiece.type[oldPiece.order];
+      this.color = oldPiece.color;
+      this.draw()
+    }
   }
 
   lock() {
@@ -184,6 +211,9 @@ function move(event) {
     console.log(p.y);
   } else if (event.key === " ") {
     p.dropPiece()
+  } else if (event.key === "c") {
+    const x = p.holdPiece(p);
+    x.draw()
   }
 }
 
@@ -193,6 +223,7 @@ function chooseNum() {
 }
 
 let score = 0;
+let pouch = []
 let p = chooseNum();
 p.draw();
 let gameOver = false;
@@ -206,10 +237,8 @@ playGame.addEventListener("click", () => {
   }, 500);
 })
 
-// create drop after spacebar
-// animation for clearing a row
+// hold piece
 
 document.addEventListener("keydown", (event) => {
   console.log(event);
 })
-
