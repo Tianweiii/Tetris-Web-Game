@@ -103,6 +103,16 @@ class Piece {
     }
   }
 
+  dropPiece() {
+    this.undraw()
+    while (!this.collisionDetect(0, 1)) {
+      this.y++
+    };
+    this.lock();
+    p = chooseNum();
+    p.draw()
+  }
+
   lock() {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
@@ -172,6 +182,8 @@ function move(event) {
   } else if (event.key === "ArrowDown") {
     p.moveDown()
     console.log(p.y);
+  } else if (event.key === " ") {
+    p.dropPiece()
   }
 }
 
@@ -193,3 +205,11 @@ playGame.addEventListener("click", () => {
     }
   }, 500);
 })
+
+// create drop after spacebar
+// animation for clearing a row
+
+document.addEventListener("keydown", (event) => {
+  console.log(event);
+})
+
