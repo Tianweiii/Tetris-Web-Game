@@ -136,6 +136,8 @@ class Piece {
       this.order = oldPiece.order;
       this.activeType = oldPiece.type[oldPiece.order];
       this.color = oldPiece.color;
+      this.x = 4;
+      this.y = 0;
       this.draw()
     }
   }
@@ -229,6 +231,7 @@ p.draw();
 let gameOver = false;
 const playGame = document.getElementById("play-game")
 playGame.addEventListener("click", () => {
+  playGame.disabled = true;
   let start = setInterval(() => {
     p.moveDown();
     if (gameOver) {
