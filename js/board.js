@@ -47,3 +47,26 @@ function drawSquare(x, y, color) {
 
 const board = new Board(context);
 console.table(board.board);
+
+const canvas2 = document.getElementById("canvas-2");
+const ctx = canvas2.getContext('2d');
+
+const row2 = 4;
+const column2 = 4;
+
+const width2 = row2 * blockSize;
+const height2 = column2 * blockSize;
+canvas2.width = width2;
+canvas2.height = height2;
+
+for (let row = 0; row < width2; row += blockSize) {
+  for (let column = 0; column < height2; column += blockSize) {
+    ctx.strokeStyle = "white";
+    ctx.strokeRect(row, column, blockSize, blockSize)
+  }
+}
+
+function drawPouchSquare(x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(blockSize * x + 1, blockSize * y + 1, blockSize - 2, blockSize - 2);
+}

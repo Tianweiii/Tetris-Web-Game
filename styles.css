@@ -69,3 +69,12 @@
 #play-game:hover {
   opacity: 0.5;
 }
+
+.piece-pouch {
+  display: flex;
+  column-gap: 70px;
+}
+
+#canvas-2 {
+  border: 1px solid white;
+}

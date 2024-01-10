@@ -13,6 +13,7 @@ class Piece {
   draw() {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
+        // render color if 1 in matrix
         if (this.activeType[row][column] === 1) {
           drawSquare(this.x + column, this.y + row, this.color)
         }
@@ -23,6 +24,7 @@ class Piece {
   undraw() {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
+        // revert if 1 in matrix
         if (this.activeType[row][column] === 1) {
           drawSquare(this.x + column, this.y + row, "white")
         }
@@ -33,6 +35,7 @@ class Piece {
   collisionDetect(x, y) {
     for (let row = 0; row < this.activeType.length; row++) {
       for (let column = 0; column < this.activeType[row].length; column++) {
+        // ignore if 0 in matrix
         if (this.activeType[row][column] === 0) {
           continue
         }
@@ -48,11 +51,13 @@ class Piece {
         if (newY < 0) {
           continue
         }
+        // check the existing board if that space is occupied
         if (board.board[newY][newX] !== 'white') {
           return true
         }
       }
     }
+    // if all conditions were not met, means it doesn't collide
     return false;
   }
 
@@ -95,11 +100,11 @@ class Piece {
     if (!this.collisionDetect(0, 1)) {
       this.undraw()
       this.y++;
-      this.draw()
+      this.draw();
     } else {
-      this.lock()
+      this.lock();
       p = chooseNum();
-      p.draw()
+      p.draw();
     }
   }
 
@@ -114,7 +119,6 @@ class Piece {
   }
 
   holdPiece(currentPiece) {
-    console.log(pouch);
     this.undraw();
     if (pouch.length === 0) {
       pouch.push({
@@ -125,12 +129,12 @@ class Piece {
       p = chooseNum();
       return p
     } else {
-      console.log(pouch[0].type)
       pouch.push({
         type: currentPiece.type,
         order: currentPiece.order,
         color: currentPiece.color
       });
+      undrawPouch();
       const oldPiece = pouch.shift();
       this.type = oldPiece.type;
       this.order = oldPiece.order;
@@ -138,7 +142,7 @@ class Piece {
       this.color = oldPiece.color;
       this.x = 4;
       this.y = 0;
-      this.draw()
+      this.draw();
     }
   }
 
@@ -197,8 +201,27 @@ class Piece {
   }
 }
 
-document.addEventListener("keydown", move)
+function drawPouch() {
+  let oldActiveType = pouch[0].type[pouch[0].order]
+  for (let row = 0; row < oldActiveType.length; row++) {
+    for (let column = 0; column < oldActiveType[row].length; column++) {
+      if (oldActiveType[row][column] === 1) {
+        drawPouchSquare(column, row, pouch[0].color);
+      }
+    }
+  }
+}
 
+function undrawPouch() {
+  let oldActiveType = pouch[0].type[pouch[0].order]
+  for (let row = 0; row < oldActiveType.length; row++) {
+    for (let column = 0; column < oldActiveType[row].length; column++) {
+      drawPouchSquare(column, row, "black");
+    }
+  }
+}
+
+document.addEventListener("keydown", move)
 function move(event) {
   if (event.key === "ArrowLeft") {
     p.moveLeft()
@@ -215,7 +238,8 @@ function move(event) {
     p.dropPiece()
   } else if (event.key === "c") {
     const x = p.holdPiece(p);
-    x.draw()
+    drawPouch()
+    // x.draw()
   }
 }
 
@@ -239,8 +263,6 @@ playGame.addEventListener("click", () => {
     }
   }, 500);
 })
-
-// hold piece
 
 document.addEventListener("keydown", (event) => {
   console.log(event);
