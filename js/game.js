@@ -154,7 +154,8 @@ class Piece {
         };
         if (this.y + row < 0) {
           gameOver = true;
-          window.alert("Game Over");
+          // window.alert("Game Over");
+          alertShown()
           break;
         }
         board.board[this.y + row][this.x + column] = this.color;
@@ -239,7 +240,7 @@ function move(event) {
   } else if (event.key === "c") {
     const x = p.holdPiece(p);
     drawPouch()
-    // x.draw()
+    // x.draw(
   }
 }
 
@@ -248,20 +249,39 @@ function chooseNum() {
   return new Piece(types[number][0], types[number][1])
 }
 
+function alertShown() {
+  if (!alert) {
+    window.alert("Game Over!");
+    alert = true;
+  }
+}
+
+let alert = false;
 let score = 0;
-let pouch = []
+let pouch = [];
 let p = chooseNum();
 p.draw();
 let gameOver = false;
 const playGame = document.getElementById("play-game")
 playGame.addEventListener("click", () => {
+  clearBoard.disabled = true;
   playGame.disabled = true;
   let start = setInterval(() => {
     p.moveDown();
     if (gameOver) {
-      clearInterval(start)
+      clearInterval(start);
+      clearBoard.disabled = false;
     }
   }, 500);
+})
+
+const clearBoard = document.getElementById("clear-board");
+clearBoard.addEventListener("click", () => {
+  board = new Board(context);
+  playGame.disabled = false;
+  gameOver = false;
+  alert = false;
+  drawBoard();
 })
 
 document.addEventListener("keydown", (event) => {

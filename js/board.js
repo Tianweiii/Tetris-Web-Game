@@ -45,7 +45,7 @@ function drawSquare(x, y, color) {
   context.fillRect(blockSize * x + 1, blockSize * y + 1, blockSize - 2, blockSize - 2)
 }
 
-const board = new Board(context);
+let board = new Board(context);
 console.table(board.board);
 
 const canvas2 = document.getElementById("canvas-2");

@@ -52,9 +52,18 @@
   column-gap: 20px;
 }
 
-#play-game {
+.buttons {
+  margin: 30px auto 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 15px;
   width: 60%;
-  margin: 50px auto;
+}
+
+#play-game,
+#clear-board {
+  width: 100%;
   border: none;
   padding: 5px 10px;
   border-radius: 20px;
@@ -66,7 +75,8 @@
   transition: 0.3s all;
 }
 
-#play-game:hover {
+#play-game:hover,
+#clear-board:hover {
   opacity: 0.5;
 }
 
