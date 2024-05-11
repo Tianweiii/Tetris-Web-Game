@@ -4,7 +4,7 @@ const scoreboard = document.getElementById("score")
 
 const columns = 10;
 const rows = 20;
-const blockSize = 30;
+const blockSize = 35;
 
 const width = canvas.width = columns * blockSize;
 const height = canvas.height = rows * blockSize;
@@ -12,6 +12,7 @@ const height = canvas.height = rows * blockSize;
 
 for (let x = 0; x < width; x += blockSize) {
   for (let y = 0; y < height; y += blockSize) {
+    // context.strokeStyle = "grey";
     context.strokeRect(x, y, blockSize, blockSize)
   }
 }

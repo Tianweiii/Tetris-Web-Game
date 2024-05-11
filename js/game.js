@@ -141,7 +141,7 @@ class Piece {
       this.activeType = oldPiece.type[oldPiece.order];
       this.color = oldPiece.color;
       this.x = 4;
-      this.y = 0;
+      this.y = -3;
       this.draw();
     }
   }
@@ -281,6 +281,12 @@ clearBoard.addEventListener("click", () => {
   playGame.disabled = false;
   gameOver = false;
   alert = false;
+  score = 0;
+  scoreboard.innerHTML = score;
+  if (pouch.length > 0) {
+    undrawPouch();
+    pouch = [];
+  }
   drawBoard();
 })
 
